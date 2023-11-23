@@ -16,8 +16,10 @@ class UserController implements TUserController {
   // create a new user
   async createUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await createNewUser(req.body);
-      SuccessResponse(res, user, "User created successfully!");
+      const user = await createNewUser(res, req.body);
+      if (user) {
+        SuccessResponse(res, user, "User created successfully!");
+      }
     } catch (error: any) {
       next(error);
     }
@@ -75,6 +77,7 @@ class UserController implements TUserController {
       next(error);
     }
   }
+
   // get all orders of specific user
   async getUserOrders(req: Request, res: Response, next: NextFunction) {
     try {
@@ -88,6 +91,7 @@ class UserController implements TUserController {
       next(error);
     }
   }
+
   // update order of specific user or create
   async updateUserOrder(req: Request, res: Response, next: NextFunction) {
     try {

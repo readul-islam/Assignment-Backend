@@ -8,28 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUserOrder = exports.updateUser = exports.removeUser = exports.getUsers = exports.getUserOrders = exports.getUser = exports.getTotalAmountOfOrders = exports.createNewUser = void 0;
 const models_1 = require("../../models");
+const user_validator_1 = __importDefault(require("../helper/user.validator"));
+const middleware_1 = require("../../../middleware");
 // create a new user
-const createNewUser = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-    // const { error, value } = userValidator.validate(reqBody);
-    // console.log(value);
-    // if (await User.isUserExists(reqBody.id)) {
-    //   throw new Error("User already exist!");
-    // }
-    // if (!error) {
-    //  const user = await User.create(value);
-    //  return user
-    // }
-    // return (error);
-    const user = yield models_1.User.create(reqBody);
-    return user;
+const createNewUser = (res, reqBody) => __awaiter(void 0, void 0, void 0, function* () {
+    const { error, value } = user_validator_1.default.validate(reqBody);
+    if (yield models_1.User.isUserExists(reqBody.id)) {
+        throw new Error("User already exist!");
+    }
+    if (error) {
+        (0, middleware_1.ErrorResponse)(res, 400, error.toString());
+    }
+    else {
+        const user = yield models_1.User.create(reqBody);
+        return user;
+    }
 });
 exports.createNewUser = createNewUser;
 // get all user
 const getUsers = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield models_1.User.find().select("-password");
+    const users = yield models_1.User.find().select("username fullName email age address -_id");
     return users;
 });
 exports.getUsers = getUsers;
@@ -60,6 +64,7 @@ const getUserOrders = (params) => __awaiter(void 0, void 0, void 0, function* ()
     const { userId } = params;
     console.log(params);
     const orders = yield models_1.User.findOne({ userId }).select("orders -_id");
+    console.log(orders);
     return orders;
 });
 exports.getUserOrders = getUserOrders;

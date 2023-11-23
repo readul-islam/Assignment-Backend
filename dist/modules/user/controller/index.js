@@ -16,8 +16,10 @@ class UserController {
     createUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield (0, service_1.createNewUser)(req.body);
-                (0, middleware_1.SuccessResponse)(res, user, "User created successfully!");
+                const user = yield (0, service_1.createNewUser)(res, req.body);
+                if (user) {
+                    (0, middleware_1.SuccessResponse)(res, user, "User created successfully!");
+                }
             }
             catch (error) {
                 next(error);

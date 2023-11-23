@@ -1,29 +1,27 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { User } from "../../models";
+import userValidator from "../helper/user.validator";
+import { ErrorResponse } from "../../../middleware";
 
 // create a new user
-const createNewUser = async (reqBody: any) => {
-  // const { error, value } = userValidator.validate(reqBody);
+const createNewUser = async (res: Response, reqBody: any) => {
+  const { error, value } = userValidator.validate(reqBody);
 
-  // console.log(value);
-  // if (await User.isUserExists(reqBody.id)) {
-  //   throw new Error("User already exist!");
-  // }
-  // if (!error) {
-  //  const user = await User.create(value);
-  //  return user
-  // }
-  // return (error);
-
-  const user = await User.create(reqBody);
-  return user;
+  if (await User.isUserExists(reqBody.id)) {
+    throw new Error("User already exist!");
+  }
+  if (error) {
+    ErrorResponse(res, 400, error.toString());
+  } else {
+    const user = await User.create(reqBody);
+    return user;
+  }
 };
 // get all user
 const getUsers = async (reqBody: any) => {
-  const users = await User.find().select("-password");
+  const users = await User.find().select("username fullName email age address -_id");
   return users;
 };
-
 
 // get specific user
 const getUser = async (params: any) => {
@@ -32,7 +30,6 @@ const getUser = async (params: any) => {
   const user = await User.findOne({ userId }).select("-password");
   return user;
 };
-
 
 // update a specific user
 const updateUser = async (params: any, reqBody: any) => {
@@ -47,7 +44,6 @@ const updateUser = async (params: any, reqBody: any) => {
   return user;
 };
 
-
 // remove a specific user
 const removeUser = async (params: any) => {
   const { userId } = params;
@@ -57,16 +53,14 @@ const removeUser = async (params: any) => {
   return deleteUser.deletedCount;
 };
 
-
 // get specific user orders
 const getUserOrders = async (params: any) => {
   const { userId } = params;
   console.log(params);
   const orders = await User.findOne({ userId }).select("orders -_id");
+  console.log(orders);
   return orders;
 };
-
-
 
 // update orders
 const updateUserOrder = async (req: Request) => {
@@ -79,8 +73,6 @@ const updateUserOrder = async (req: Request) => {
 
   return newProduct;
 };
-
-
 
 // get total amount of orders
 const getTotalAmountOfOrders = async (params: any) => {
@@ -104,7 +96,6 @@ const getTotalAmountOfOrders = async (params: any) => {
 
   return calculateAmount[0];
 };
-
 
 export {
   createNewUser,

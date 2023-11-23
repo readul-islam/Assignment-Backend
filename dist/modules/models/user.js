@@ -37,7 +37,6 @@ const addressSchema = new mongoose_1.Schema({
 const ordersSchema = new mongoose_1.Schema({
     productName: {
         type: String,
-        unique: true,
         required: [true, "productName is required"],
     },
     price: {

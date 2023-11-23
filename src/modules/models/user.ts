@@ -40,7 +40,6 @@ const ordersSchema = new Schema<TUserOrders>(
   {
     productName: {
       type: String,
-      unique: true,
       required: [true, "productName is required"],
     },
     price: {
