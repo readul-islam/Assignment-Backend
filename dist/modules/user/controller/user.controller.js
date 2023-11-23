@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_handler_1 = require("../../../middleware/common.handler");
 const service_1 = require("../service");
-class User {
+class UserController {
     createUser(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -101,4 +101,4 @@ class User {
         });
     }
 }
-exports.default = new User();
+exports.default = new UserController();

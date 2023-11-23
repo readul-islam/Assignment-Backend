@@ -28,12 +28,12 @@ const fullNameSchema = new mongoose_1.Schema({
         required: [true, "firstName is required"],
         maxlength: [20, "lastName can not be more than 20 characters"],
     },
-});
+}, { _id: false });
 const addressSchema = new mongoose_1.Schema({
     street: String,
     city: String,
     country: String,
-});
+}, { _id: false });
 const ordersSchema = new mongoose_1.Schema({
     productName: {
         type: String,
@@ -48,7 +48,7 @@ const ordersSchema = new mongoose_1.Schema({
         type: Number,
         required: [true, "quantity is required"],
     },
-});
+}, { _id: false });
 const userSchema = new mongoose_1.Schema({
     userId: {
         type: Number,
@@ -84,7 +84,7 @@ const userSchema = new mongoose_1.Schema({
         type: addressSchema,
         required: [true, "address is required"],
     },
-    orders: { type: ordersSchema, required: [true, "orders is required"] },
+    orders: { type: [ordersSchema], required: [true, "orders is required"] },
 });
 // secure our password by bcrypt
 userSchema.pre("save", function (next) {
@@ -103,7 +103,7 @@ userSchema.post("save", function (user, next) {
 //custom static method
 userSchema.statics.isUserExists = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = yield User.findOne({ id });
+        const user = yield User.findOne({ userId: id });
         return user;
     });
 };

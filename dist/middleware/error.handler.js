@@ -12,7 +12,11 @@ exports.notFound = notFound;
 const globalErrorHandler = (err, req, res, next) => {
     res.status(err.status || 500).json({
         success: false,
-        error: err.message || "Unknown Error",
+        message: err.message || "Unknown Error",
+        error: {
+            code: err.status || 500,
+            description: err.message || "Unknown Error"
+        },
     });
 };
 exports.globalErrorHandler = globalErrorHandler;

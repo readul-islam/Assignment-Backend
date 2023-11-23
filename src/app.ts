@@ -1,9 +1,9 @@
 import cors from "cors";
 import express, { Application } from "express";
 import dbConnection from "./config/db";
-import { globalErrorHandler, notFound } from "./middleware/error.handler";
-import { SendToClient } from "./middleware/common.handler";
+
 import appRouter from "./routes";
+import { globalErrorHandler, notFound } from "./middleware";
 const app: Application = express();
 
 // app parser

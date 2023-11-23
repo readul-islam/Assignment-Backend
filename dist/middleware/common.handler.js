@@ -1,8 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SendToClient = void 0;
+exports.SuccessResponse = exports.ErrorResponse = void 0;
 // this is alternative custom handler for sending same structure data to client
-const SendToClient = (res, data) => {
-    res.send({ success: true, data });
+const SuccessResponse = (res, data, message) => {
+    res.send({ success: true, message, data });
 };
-exports.SendToClient = SendToClient;
+exports.SuccessResponse = SuccessResponse;
+const ErrorResponse = (res, statusCode, message) => {
+    res.send({ success: false, message, error: {
+            code: statusCode,
+            description: message,
+        } });
+};
+exports.ErrorResponse = ErrorResponse;

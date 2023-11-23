@@ -21,7 +21,7 @@ const userValidator = Joi.object({
   password: Joi.string().required().trim(),
   fullName: userNameValidator.required(),
   age: Joi.number().required(),
-  email: Joi.string().required().trim(),
+  email: Joi.string().email({minDomainSegments: 2, tlds: { allow: ['com', 'net'] }}).required().trim(),
   isActive: Joi.boolean().required(),
   hobbies: Joi.array().items(Joi.string().required()).required(),
   address: userAddressValidator.required(),

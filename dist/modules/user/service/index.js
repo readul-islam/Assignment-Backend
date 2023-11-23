@@ -9,36 +9,86 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTotalAmountOfOrders = exports.updateUserOrder = exports.getUserOrders = exports.removeUser = exports.updateUser = exports.getUser = exports.getAllUsers = exports.createNewUser = void 0;
+exports.updateUserOrder = exports.updateUser = exports.removeUser = exports.getUsers = exports.getUserOrders = exports.getUser = exports.getTotalAmountOfOrders = exports.createNewUser = void 0;
+const models_1 = require("../../models");
+// create a new user
 const createNewUser = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(reqBody);
+    // const { error, value } = userValidator.validate(reqBody);
+    // console.log(value);
+    // if (await User.isUserExists(reqBody.id)) {
+    //   throw new Error("User already exist!");
+    // }
+    // if (!error) {
+    //  const user = await User.create(value);
+    //  return user
+    // }
+    // return (error);
+    const user = yield models_1.User.create(reqBody);
+    return user;
 });
 exports.createNewUser = createNewUser;
-const getAllUsers = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-    return { success: true };
+// get all user
+const getUsers = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield models_1.User.find().select("-password");
+    return users;
 });
-exports.getAllUsers = getAllUsers;
-const getUser = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(query);
+exports.getUsers = getUsers;
+// get specific user
+const getUser = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = params;
+    const user = yield models_1.User.findOne({ userId }).select("-password");
+    return user;
 });
 exports.getUser = getUser;
-const updateUser = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(query);
+// update a specific user
+const updateUser = (params, reqBody) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = params;
+    const user = yield models_1.User.findOneAndUpdate({ userId }, Object.assign({}, reqBody), { returnOriginal: false }).select("-password");
+    return user;
 });
 exports.updateUser = updateUser;
-const removeUser = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(query);
+// remove a specific user
+const removeUser = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = params;
+    const deleteUser = yield models_1.User.deleteOne({ userId });
+    console.log(deleteUser);
+    return deleteUser.deletedCount;
 });
 exports.removeUser = removeUser;
-const getUserOrders = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(query);
+// get specific user orders
+const getUserOrders = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = params;
+    console.log(params);
+    const orders = yield models_1.User.findOne({ userId }).select("orders -_id");
+    return orders;
 });
 exports.getUserOrders = getUserOrders;
-const updateUserOrder = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(query);
+// update orders
+const updateUserOrder = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const newProduct = yield models_1.User.findOneAndUpdate({ userId }, { $push: { orders: req.body } }, { returnOriginal: false }).select("orders -_id");
+    return newProduct;
 });
 exports.updateUserOrder = updateUserOrder;
-const getTotalAmountOfOrders = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(query);
+// get total amount of orders
+const getTotalAmountOfOrders = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = params;
+    const id = parseInt(userId);
+    const calculateAmount = yield models_1.User.aggregate([
+        { $match: { userId: id } },
+        { $unwind: "$orders" },
+        {
+            $group: {
+                _id: null,
+                totalPrice: {
+                    $sum: { $multiply: ["$orders.price", "$orders.quantity"] },
+                },
+            },
+        },
+        {
+            $project: { _id: 0 },
+        },
+    ]);
+    return calculateAmount[0];
 });
 exports.getTotalAmountOfOrders = getTotalAmountOfOrders;

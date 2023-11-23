@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { Model } from "mongoose";
 
 // user scheme type
 interface TUserFullName {
@@ -25,11 +26,14 @@ interface TUserFullName {
     isActive: boolean;
     hobbies: Array<string>;
     address: TUserAddress;
-    orders: TUserOrders;
+    orders: Array<TUserOrders>;
   }
+
+
+
   
   // user controller type
-interface TUser {
+interface TUserController {
   createUser(req: Request, res: Response, next: NextFunction): void;
   getUsers(req: Request, res: Response, next: NextFunction): void;
   updateUser(req: Request, res: Response, next: NextFunction): void;
@@ -42,4 +46,10 @@ interface TUser {
 }
 
 
-export { TUser,TUserFullName,TUserAddress ,TUserOrders,TUserSchema };
+// create a static method interface 
+export interface UserModel extends Model<TUserSchema> {
+  isUserExists(id: string): Promise<TUserSchema | null>;
+}
+
+
+export { TUserController,TUserFullName,TUserAddress ,TUserOrders,TUserSchema };

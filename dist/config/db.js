@@ -17,9 +17,8 @@ const index_1 = require("./index");
 const dbConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         mongoose_1.default.connect(index_1.DB_URL);
-        console.log('Database connection ');
+        console.log("Database connection ");
     }
-    catch (err) {
-    }
+    catch (err) { }
 });
 exports.default = dbConnection;
