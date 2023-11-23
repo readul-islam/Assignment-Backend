@@ -4,6 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
+app_1.default.get('/', (req, res) => {
+    res.send({ success: true });
+});
 app_1.default.listen(5000, () => {
     console.log(`Server started on port ${5000}`);
 });
