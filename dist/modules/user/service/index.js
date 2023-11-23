@@ -15,7 +15,7 @@ const createNewUser = (reqBody) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.createNewUser = createNewUser;
 const getAllUsers = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-    return reqBody;
+    return { success: true };
 });
 exports.getAllUsers = getAllUsers;
 const getUser = (query) => __awaiter(void 0, void 0, void 0, function* () {

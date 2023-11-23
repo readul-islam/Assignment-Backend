@@ -4,9 +4,9 @@
 const createNewUser = async (reqBody: any) => {
   console.log(reqBody);
 };
-type GetUsersType = {name:string, roll:number}
-const getAllUsers = async (reqBody:GetUsersType ) => {
-  return reqBody
+
+const getAllUsers = async (reqBody:any ) => {
+  return {success:true}
 };
 const getUser = async (query: any) => {
   console.log(query);
