@@ -13,11 +13,13 @@ const userNameValidator = Joi.object({
     .regex(/^[A-Z][a-z]*$/, { name: "capitalize" }),
   lastName: Joi.string().required().trim(),
 });
+
 const userAddressValidator = Joi.object({
   street: Joi.string().required().trim(),
   city: Joi.string().required().trim(),
   country: Joi.string().required().trim(),
 });
+
 const userOrdersValidator = Joi.object({
   productName: Joi.string().required(),
   price: Joi.number().required(),
