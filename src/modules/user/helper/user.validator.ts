@@ -36,7 +36,7 @@ const userValidator = Joi.object({
   isActive: Joi.boolean().required(),
   hobbies: Joi.array().items(Joi.string().required()).required(),
   address: userAddressValidator.required(),
-  orders: Joi.array().items(userOrdersValidator.required()).required(),
+  orders: Joi.array().items(userOrdersValidator.required()),
 });
 
 export default userValidator;

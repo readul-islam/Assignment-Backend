@@ -34,6 +34,6 @@ const userValidator = joi_1.default.object({
     isActive: joi_1.default.boolean().required(),
     hobbies: joi_1.default.array().items(joi_1.default.string().required()).required(),
     address: userAddressValidator.required(),
-    orders: joi_1.default.array().items(userOrdersValidator.required()).required(),
+    orders: joi_1.default.array().items(userOrdersValidator.required()),
 });
 exports.default = userValidator;

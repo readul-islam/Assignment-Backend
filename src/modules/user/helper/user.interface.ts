@@ -26,7 +26,7 @@ interface TUserFullName {
     isActive: boolean;
     hobbies: Array<string>;
     address: TUserAddress;
-    orders: Array<TUserOrders>;
+    orders?: Array<TUserOrders>;
   }
 
 

@@ -89,7 +89,7 @@ const userSchema = new Schema<TUserSchema>({
     type: addressSchema,
     required: [true, "address is required"],
   },
-  orders: { type: [ordersSchema], required: [true, "orders is required"] },
+  orders: { type: [ordersSchema], required: false },
 });
 
 // secure our password by bcrypt
@@ -101,6 +101,7 @@ userSchema.pre("save", async function (next) {
 // hide password from response
 userSchema.post("save", async function (user, next) {
   user.password = "";
+  
   next();
 });
 

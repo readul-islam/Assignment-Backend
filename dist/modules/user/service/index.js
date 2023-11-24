@@ -26,7 +26,7 @@ const createNewUser = (res, reqBody) => __awaiter(void 0, void 0, void 0, functi
         (0, middleware_1.ErrorResponse)(res, 400, result.error.message);
     }
     else {
-        const user = yield models_1.User.create(result.value);
+        let user = yield models_1.User.create(result.value);
         return user;
     }
 });

@@ -83,7 +83,7 @@ const userSchema = new mongoose_1.Schema({
         type: addressSchema,
         required: [true, "address is required"],
     },
-    orders: { type: [ordersSchema], required: [true, "orders is required"] },
+    orders: { type: [ordersSchema], required: false },
 });
 // secure our password by bcrypt
 userSchema.pre("save", function (next) {

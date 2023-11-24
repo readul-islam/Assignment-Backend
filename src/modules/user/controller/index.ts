@@ -18,12 +18,15 @@ class UserController implements TUserController {
     try {
       const user = await createNewUser(res, req.body);
       if (user) {
-        SuccessResponse(res, user, "User created successfully!");
-      }
-    } catch (error: any) {
-      next(error);
-    }
-  }
+      const data = user.toObject();
+      const {orders, _id , ...rest} = data;
+      SuccessResponse(res, rest, "User created successfully!");
+     }
+   } catch (error: any) {
+     next(error);
+   }
+ }
+  
 
   // get all users
   async getUsers(req: Request, res: Response, next: NextFunction) {

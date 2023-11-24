@@ -12,7 +12,8 @@ const createNewUser = async (res: Response, reqBody: any) => {
   if (result.error) {
     ErrorResponse(res, 400, result.error.message);
   } else {
-    const user = await User.create(result.value);
+    let user = await User.create(result.value);
+    
     return user;
   }
 };
