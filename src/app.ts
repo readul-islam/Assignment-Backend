@@ -17,6 +17,10 @@ dbConnection();
 // app route
 app.use("/api", appRouter);
 
+app.get('/',(req, res)=>{
+    res.status(200).json({success:true,message:"Server Working Successfully"})
+    })
+
 // notFound handler
 app.use("*", notFound);
 

@@ -17,6 +17,9 @@ app.use(express_1.default.urlencoded({ extended: true }));
 (0, db_1.default)();
 // app route
 app.use("/api", routes_1.default);
+app.get('/', (req, res) => {
+    res.status(200).json({ success: true, message: "Server Working Successfully" });
+});
 // notFound handler
 app.use("*", middleware_1.notFound);
 app.use(middleware_1.globalErrorHandler);
