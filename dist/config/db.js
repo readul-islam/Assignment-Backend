@@ -19,6 +19,9 @@ const dbConnection = () => __awaiter(void 0, void 0, void 0, function* () {
         mongoose_1.default.connect(index_1.DB_URL);
         console.log("Database connection ");
     }
-    catch (err) { }
+    catch (err) {
+        console.log(err);
+        process.exit(1);
+    }
 });
 exports.default = dbConnection;

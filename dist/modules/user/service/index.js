@@ -13,20 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUserOrder = exports.updateUser = exports.removeUser = exports.getUsers = exports.getUserOrders = exports.getUser = exports.getTotalAmountOfOrders = exports.createNewUser = void 0;
+const middleware_1 = require("../../../middleware");
 const models_1 = require("../../models");
 const user_validator_1 = __importDefault(require("../helper/user.validator"));
-const middleware_1 = require("../../../middleware");
 // create a new user
 const createNewUser = (res, reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-    const { error, value } = user_validator_1.default.validate(reqBody);
+    const result = user_validator_1.default.validate(reqBody);
     if (yield models_1.User.isUserExists(reqBody.id)) {
         throw new Error("User already exist!");
     }
-    if (error) {
-        (0, middleware_1.ErrorResponse)(res, 400, error.toString());
+    if (result.error) {
+        (0, middleware_1.ErrorResponse)(res, 400, result.error.message);
     }
     else {
-        const user = yield models_1.User.create(reqBody);
+        const user = yield models_1.User.create(result.value);
         return user;
     }
 });
@@ -55,16 +55,13 @@ exports.updateUser = updateUser;
 const removeUser = (params) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = params;
     const deleteUser = yield models_1.User.deleteOne({ userId });
-    console.log(deleteUser);
     return deleteUser.deletedCount;
 });
 exports.removeUser = removeUser;
 // get specific user orders
 const getUserOrders = (params) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = params;
-    console.log(params);
     const orders = yield models_1.User.findOne({ userId }).select("orders -_id");
-    console.log(orders);
     return orders;
 });
 exports.getUserOrders = getUserOrders;

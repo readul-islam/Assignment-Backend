@@ -5,7 +5,10 @@ const dbConnection = async () => {
   try {
     mongoose.connect(DB_URL as string);
     console.log("Database connection ");
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
 };
 
 export default dbConnection;

@@ -24,6 +24,7 @@ class UserController implements TUserController {
       next(error);
     }
   }
+
   // get all users
   async getUsers(req: Request, res: Response, next: NextFunction) {
     try {
@@ -37,6 +38,7 @@ class UserController implements TUserController {
       next(error);
     }
   }
+
   // get a specific user
   async getUser(req: Request, res: Response, next: NextFunction) {
     try {
@@ -50,11 +52,11 @@ class UserController implements TUserController {
       next(error);
     }
   }
+
   // update a specific user
   async updateUser(req: Request, res: Response, next: NextFunction) {
     try {
       const updated = await updateUser(req.params, req.body);
-
       if (updated) {
         SuccessResponse(res, updated, "User fetched successfully!");
       } else {
@@ -64,6 +66,7 @@ class UserController implements TUserController {
       next(error);
     }
   }
+
   // remove a specific user
   async removeUser(req: Request, res: Response, next: NextFunction) {
     try {
@@ -105,6 +108,7 @@ class UserController implements TUserController {
       next(error);
     }
   }
+  
   // get total amount of order
   async getTotalAmountOfOrder(req: Request, res: Response, next: NextFunction) {
     try {
