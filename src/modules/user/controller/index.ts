@@ -58,7 +58,7 @@ class UserController implements TUserController {
     try {
       const updated = await updateUser(req.params, req.body);
       if (updated) {
-        SuccessResponse(res, updated, "User fetched successfully!");
+        SuccessResponse(res, updated, "User updated successfully!");
       } else {
         ErrorResponse(res, 404, "User not found");
       }
@@ -114,7 +114,7 @@ class UserController implements TUserController {
     try {
       const ordersAmount = await getTotalAmountOfOrders(req.params);
       if (ordersAmount) {
-        SuccessResponse(res, ordersAmount, "Order created successfully!");
+        SuccessResponse(res, ordersAmount, "Total price calculated successfully!");
       } else {
         ErrorResponse(res, 404, "User not found");
       }

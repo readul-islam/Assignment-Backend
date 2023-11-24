@@ -28,7 +28,7 @@ const getUsers = async (reqBody: any) => {
 // get specific user
 const getUser = async (params: any) => {
   const { userId } = params;
-  const user = await User.findOne({ userId }).select("-password");
+  const user = await User.findOne({ userId }).select("-password -orders -_id");
   return user;
 };
 
@@ -39,7 +39,7 @@ const updateUser = async (params: any, reqBody: any) => {
     { userId },
     { ...reqBody },
     { returnOriginal: false }
-  ).select("-password");
+  ).select("-password -orders -_id");
   return user;
 };
 
