@@ -66,7 +66,7 @@ class UserController {
             try {
                 const updated = yield (0, service_1.updateUser)(req.params, req.body);
                 if (updated) {
-                    (0, middleware_1.SuccessResponse)(res, updated, "User fetched successfully!");
+                    (0, middleware_1.SuccessResponse)(res, updated, "User updated successfully!");
                 }
                 else {
                     (0, middleware_1.ErrorResponse)(res, 404, "User not found");
@@ -134,7 +134,7 @@ class UserController {
             try {
                 const ordersAmount = yield (0, service_1.getTotalAmountOfOrders)(req.params);
                 if (ordersAmount) {
-                    (0, middleware_1.SuccessResponse)(res, ordersAmount, "Order created successfully!");
+                    (0, middleware_1.SuccessResponse)(res, ordersAmount, "Total price calculated successfully!");
                 }
                 else {
                     (0, middleware_1.ErrorResponse)(res, 404, "User not found");

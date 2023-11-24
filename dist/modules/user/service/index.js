@@ -40,14 +40,14 @@ exports.getUsers = getUsers;
 // get specific user
 const getUser = (params) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = params;
-    const user = yield models_1.User.findOne({ userId }).select("-password");
+    const user = yield models_1.User.findOne({ userId }).select("-password -orders -_id");
     return user;
 });
 exports.getUser = getUser;
 // update a specific user
 const updateUser = (params, reqBody) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = params;
-    const user = yield models_1.User.findOneAndUpdate({ userId }, Object.assign({}, reqBody), { returnOriginal: false }).select("-password");
+    const user = yield models_1.User.findOneAndUpdate({ userId }, Object.assign({}, reqBody), { returnOriginal: false }).select("-password -orders -_id");
     return user;
 });
 exports.updateUser = updateUser;
